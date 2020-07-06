@@ -1,0 +1,68 @@
+BaseError:
+  description: Error
+  content:
+    application/problem+json:
+      schema:
+        $ref: "./problems.yaml#ProblemDetails"
+
+BadRequest:
+  allOf:
+    - $ref: "#/BaseError"
+  description: Bad Request
+
+UnexpectedError:
+  allOf:
+    - $ref: "#/BaseError"
+  description: Unexpected Error
+
+Forbidden:
+  allOf:
+    - $ref: "#/BaseError"
+  description: Forbidden
+
+NotFound:
+  allOf:
+    - $ref: "#/BaseError"
+    - content:
+        application/problem+json:
+          schema:
+            type: object
+            required:
+              - resource
+            properties:
+              resource:
+                $ref: "./http.yaml#Uri"
+  description: Not Found
+
+PayloadTooLarge:
+  allOf:
+    - $ref: "#/BaseError"
+    - content:
+        application/problem+json:
+          schema:
+            type: object
+            required:
+              - payloadSize
+              - maxAllowed
+            properties:
+              payloadSize:
+                type: integer
+                format: int64
+              maxAllowed:
+                type: integer
+                format: int64
+  description: Payload Too Large
+
+UnsupportedMediaType:
+  allOf:
+    - $ref: "#/BaseError"
+    - content:
+        application/problem+json:
+          schema:
+            type: object
+            properties:
+              supportedTypes:
+                type: array
+                items:
+                  type: string
+  description: Unsupported Media Type

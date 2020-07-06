@@ -1,0 +1,116 @@
+AddOperation:
+  type: object
+  required:
+    - op
+    - path
+    - value
+  properties:
+    op:
+      type: string
+      pattern: ^add$
+    path:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+    value: {}
+
+RemoveOperation:
+  type: object
+  required:
+    - op
+    - path
+  properties:
+    op:
+      type: string
+      pattern: ^remove$
+    path:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+
+ReplaceOperation:
+  type: object
+  required:
+    - op
+    - path
+    - value
+  properties:
+    op:
+      type: string
+      pattern: ^replace$
+    path:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+    value: {}
+
+CopyOperation:
+  type: object
+  required:
+    - op
+    - from
+    - path
+  properties:
+    op:
+      type: string
+      pattern: ^copy$
+    from:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+    path:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+
+MoveOperation:
+  type: object
+  required:
+    - op
+    - from
+    - path
+  properties:
+    op:
+      type: string
+      pattern: ^move$
+    from:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+    path:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+
+TestOperation:
+  type: object
+  required:
+    - op
+    - path
+    - value
+  properties:
+    op:
+      type: string
+      pattern: ^test$
+    path:
+      type: string
+      pattern:
+        $ref: "./http.yaml#Uri"
+    value: {}
+
+PatchOperation:
+  oneOf:
+    - $ref: "#/AddOperation"
+    - $ref: "#/RemoveOperation"
+    - $ref: "#/ReplaceOperation"
+    - $ref: "#/CopyOperation"
+    - $ref: "#/MoveOperation"
+    - $ref: "#/TestOperation"
+
+PatchRequestBody:
+  content:
+    application/json-patch+json:
+      schema:
+        type: array
+        items:
+          $ref: "#/PatchOperation"

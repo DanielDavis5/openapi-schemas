@@ -1,0 +1,17 @@
+ProblemDetails:
+  type: object
+  required:
+    - title
+    - status
+    - details
+  properties:
+    type:
+      $ref: "./http.yaml#Uri"
+    title:
+      type: string
+    status:
+      $ref: "./http.yaml#StatusCode"
+    details:
+      type: string
+    instance:
+      $ref: "./http.yaml#Uri"
